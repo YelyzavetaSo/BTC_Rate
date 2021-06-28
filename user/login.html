@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Log in</title>
+    <style>
+        .text {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="text">
+        <h2>Registration</h2>
+        <lable for="email">"E-mail:"</lable>
+        <input type="text" id="email" name="email" /><br /><br>
+        <lable for="pass">"Pass:"</lable>
+        <input type="text" id="pass" name="pass" /><br />
+        <input type="button" value="Submit" id="login" />
+    </div>
+    <!--recive info, then find such e-mail(or error), then check if pass is correct(or error).
+        If all data is correct, redirect to the "BTC rate" page.-->
+    <!--http request to GET data & process it-->
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+    <script>
+        var uri = 'api/values';
+
+        $(document).ready(function () {
+            var mail = $('#email').val();
+            var p = $('#pass').val();
+            $("login").click(function (event) {
+                event.preventDefault();
+                GetUser(mail, p);
+            });
+        });
+        function GetUser(mail, p) {//after successful logining
+            $.ajax({
+                url: uri,
+                type: 'POST',
+                success: function (data) {
+                    window.location = "https://localhost:44301/btcRate.html";
+                    //user have to be redirected to the btc rate page
+                },
+                error: function (data) {
+                    alert("Error has occured!");
+                }
+            });
+        }
+    </script>
+</body>
+</html>
